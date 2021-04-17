@@ -19,7 +19,7 @@ import com.enset.tpspringMVC.repositories.PatientRepository;
 public class PatientController {
 	@Autowired
 	PatientRepository patientRepository;
-	@GetMapping(path="/index")
+	@GetMapping(path="/")
 	
 	//utiliser un objet request avec le parametre mot cle saisi dans la page html
 	// si j'appell ans parametre je vais chercher par une chaine vide, sinon je cherche avec le mot cle saisi
@@ -55,7 +55,7 @@ public class PatientController {
 	// le parametre du request s'apele id et la variable s'appelle id donc c'est pa la peine d'utiliser @tequestParam=...
 	public String delete(Long id) {
 		patientRepository.deleteById(id);
-		return "redirect:/index"; // va redirectionner vers la page /index 
+		return "redirect:/"; // va redirectionner vers la page /index 
 	}
 	@GetMapping(path="/add")
 	public String form(Model model) {
@@ -66,7 +66,7 @@ public class PatientController {
 	public String save(@Valid Patient patient,BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) 		return "patientsForm";
 		patientRepository.save(patient);
-		return "redirect:/index";
+		return "redirect:/";
 	}
 
 	@GetMapping(path="/editPatient")

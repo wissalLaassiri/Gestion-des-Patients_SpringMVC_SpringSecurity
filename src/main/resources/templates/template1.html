@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/Layout" >
+ <!-- on ajoute la namespace  xmlns:sec pour permettre au thymeleaf de communiquer ves spring security -->
+
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="www.ultraq.net.nz/thymeleaf/Layout" 
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+ >
 <head>
 <meta charset="utf-8">
 <title> Patients</title>
@@ -12,7 +17,7 @@
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <!-- Brand -->
-  <a class="navbar-brand"  th:href="@{index}">Patients</a>
+  <a class="navbar-brand"  th:href="@{/}">Patients</a>
 
   <!-- Links -->
   <ul class="navbar-nav">
@@ -25,19 +30,18 @@
         Action
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" th:href="@{add}">Ajouter</a>
-        <a class="dropdown-item" href="#">Modifier</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" th:href="@{add}">Ajouter</a>
       </div>
     </li>
      </ul>
      <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-        Username
+        <span sec:authentication="name"></span>
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Login</a>
-        <a class="dropdown-item" href="#">Logout</a>
+        <a sec:authorize="isAnonymous()" class="dropdown-item" href="#">Login</a>
+        <a sec:authorize="isAuthenticated()"class="dropdown-item" th:href="@{logout}">Logout</a>
         <a class="dropdown-item" href="#">Profile</a>
       </div>
     </li>
